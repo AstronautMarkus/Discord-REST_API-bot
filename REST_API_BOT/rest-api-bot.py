@@ -3,13 +3,18 @@ import discord
 from discord.ext import commands
 
 
-bot = commands.bot(command_prefix="_", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix="_", intents=discord.Intents.all())
 
 
 
 @bot.event  #only for check bot status on startup
 async def on_ready():
     print(f"Started bot as: {bot.user}")
+
+@bot.command() #synchronize commands for the bot
+async def sync(ctx):
+    await bot.tree.sync()
+    await ctx.send("Ready!")
 
 
 # commands list starts here
@@ -23,4 +28,4 @@ async def ping(interaction: discord.Interaction):
 # commands list ends here
 
 
-bot.run("TOKEN_HERE")
+bot.run("TOKEN_HERE") #ALWAYS change before commits :)
