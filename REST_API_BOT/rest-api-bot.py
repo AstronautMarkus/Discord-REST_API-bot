@@ -68,7 +68,7 @@ async def waifuImg(interaction: discord.Interaction):
         await interaction.response.send_message(img_waifu)
     else:
         await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
-        await interaction.response.send_message(f"https://http.cat/{response.status_code}")
+        await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
 # Cat Facts API https://catfact.ninja/
 
@@ -90,7 +90,7 @@ async def catFacts(interaction: discord.Interaction):
         await interaction.response.send_message(f"a fact about cats: {fact} 🐈")
     else:
         await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
-        await interaction.response.send_message(f"https://http.cat/{response.status_code}")
+        await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
 # Bored https://www.boredapi.com/
 
@@ -123,7 +123,7 @@ async def boredCommand(interaction: discord.Interaction):
         await interaction.response.send_message(embed=embed)
     else:
         await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
-        await interaction.response.send_message(f"https://http.cat/{response.status_code}")
+        await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
 
 # WAIFU.PICS (NSFW with protection) https://waifu.pics/
@@ -151,7 +151,7 @@ async def waifuImgNSFW(interaction: discord.Interaction):
             await interaction.response.send_message(f"||{img_waifu}||")
     else:
         await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
-        await interaction.response.send_message(f"https://http.cat/{response.status_code}")
+        await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
 
 # commands list ends here
