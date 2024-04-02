@@ -154,6 +154,38 @@ async def waifuImgNSFW(interaction: discord.Interaction):
         await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
 
+@bot.tree.command(name="joke", description="Use if you want a random joke.")
+async def jokeCommand(interaction: discord.Interaction):
+
+    url = "https://official-joke-api.appspot.com/jokes/random"
+
+    response = requests.get(url) # GET petition
+
+    # REST logic
+
+    if response.status_code == 200:
+
+        data = response.json()
+
+        setup = data['setup']
+        type = data['type']
+        punchline = data['punchline']
+
+        embed = discord.Embed(
+        title="A random joke",
+        description=setup,
+        color=discord.Color.red()
+        )
+        embed.add_field(name="", value=punchline, inline=False)
+        embed.add_field(name="Type", value=type, inline=False)
+
+
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
+        await interaction.followup.send(f"https://http.cat/{response.status_code}")
+
+
 # commands list ends here
 
 
