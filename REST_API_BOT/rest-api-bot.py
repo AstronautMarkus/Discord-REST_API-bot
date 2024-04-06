@@ -131,28 +131,50 @@ async def boredCommand(interaction: discord.Interaction):
 @bot.tree.command(name="waifu_img_nsfw", description="Use at your own risk!")
 async def waifuImgNSFW(interaction: discord.Interaction):
 
-    # Check if the channel is NSFW
-    if interaction.channel.is_nsfw():
-        nsfw_allowed = True
-    else:
-        await interaction.response.send_message(f"Sorry, this channel `{interaction.channel.name}` doesn't allow NSFW content.")
-        return
 
-    url = "https://api.waifu.pics/sfw/waifu" if not nsfw_allowed else "https://api.waifu.pics/nsfw/waifu"  # API url
+    if isinstance(interaction.channel, discord.DMChannel): # Is private channel
+        
+        url = "https://api.waifu.pics/nsfw/waifu"
 
-    response = requests.get(url)  # GET request
+        response = requests.get(url)  # GET request
 
-    # REST logic
-    if response.status_code == 200:
-        data = response.json()
-        img_waifu = data['url']
-
-        if nsfw_allowed:
+        # REST logic
+        if response.status_code == 200:
+            data = response.json()
+            img_waifu = data['url']
             await interaction.response.send_message(f"||{img_waifu}||")
-    else:
-        await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
-        await interaction.followup.send(f"https://http.cat/{response.status_code}")
+        else:
+            await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
+            await interaction.followup.send(f"https://http.cat/{response.status_code}")
 
+
+    else: # Server channel
+        
+         # Check if the channel is NSFW
+        if interaction.channel.is_nsfw():
+            nsfw_allowed = True
+        else:
+            await interaction.response.send_message(f"Sorry, this channel `{interaction.channel.name}` doesn't allow NSFW content.")
+            return
+
+        url = "https://api.waifu.pics/sfw/waifu" if not nsfw_allowed else "https://api.waifu.pics/nsfw/waifu"  # API url
+
+        response = requests.get(url)  # GET request
+
+        # REST logic
+        if response.status_code == 200:
+            data = response.json()
+            img_waifu = data['url']
+
+            if nsfw_allowed:
+                await interaction.response.send_message(f"||{img_waifu}||")
+        else:
+            await interaction.response.send_message(f"Sorry, the request could not be made at this time. Reason: {response.status_code}")
+            await interaction.followup.send(f"https://http.cat/{response.status_code}")
+
+
+
+   
 
 @bot.tree.command(name="joke", description="Use if you want a random joke.")
 async def jokeCommand(interaction: discord.Interaction):
