@@ -14,6 +14,7 @@ bot = commands.Bot(command_prefix="_", intents=discord.Intents.all())
 async def on_ready():
     print(f"Started bot as: {bot.user}")
 
+
 @bot.command() #synchronize commands for the bot
 async def sync(ctx):
     await bot.tree.sync()
@@ -211,9 +212,23 @@ async def jokeCommand(interaction: discord.Interaction):
 # commands list ends here
 
 
+# events list
+
+@bot.event
+async def on_message(message):
+    if bot.user.mentioned_in(message) and message.author != bot.user:
+        await message.channel.send(f"Hey {message.author.mention}! my prefix is `{bot.command_prefix}`")
+
+
+    # Events like bot commands still working
+    await bot.process_commands(message)
+
+
+
+
+# events list ends here 
 
 bot.run("TOKEN_HERE") #ALWAYS change before commits :)
-
 
 
 
